@@ -24,7 +24,7 @@ def getInput(use_speech=True, anounce=""):
                 try:
                     audio = r.listen(source, timeout=5, phrase_time_limit=3)
                 except sr.WaitTimeoutError as e:
-                    print("-", end="")
+                    print("-")
                     continue
             print(".")
 

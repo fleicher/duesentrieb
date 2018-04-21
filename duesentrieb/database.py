@@ -60,7 +60,6 @@ def insert_element(topic, description, id=None, type="statement", fronts=None, i
     name = randint(1, 1000000)
 
     with sqlite3.connect(DB_NAME) as con:
-        # c = "SELECT EXISTS(SELECT * FROM structure WHERE topic='{topic}' AND id='{id}');"
         if add_structure:  # not con.execute(c).fetchone()[0]:
             c = "INSERT INTO structure (topic, id, type, fronts, intents) VALUES ('{topic}', '{id}', '{type}', " \
                 "'{fronts}', '{intents}');".format(
@@ -68,18 +67,11 @@ def insert_element(topic, description, id=None, type="statement", fronts=None, i
             )
             con.execute(c)
 
-        c = "INSERT INTO content (topic, id, name, description, rank) VALUES ('{topic}', '{id}', '{name}', '{desc}', '{rank}');".format(
-            topic=topic, id=id, desc=description, rank=0.0, name=name
-        )
+        c = "INSERT INTO content (topic, id, name, description, rank)" \
+            " VALUES ('{topic}', '{id}', '{name}', '{desc}', '{rank}');".format(
+                topic=topic, id=id, desc=description, rank=0.0, name=name
+            )
         con.execute(c)
-
-
-# def update_element(table_name, description, back, id, type="statement", fronts=None, intents=None):
-#     with sqlite3.connect(DB_NAME) as con:
-#         c = "UPDATE {table} (id, description, back, type, fronts, intents) VALUES ({id}, '{desc}', '{back}', '{type}', '{fronts}', '{intents}');".format(
-#             table=table_name, id=id, desc=description, back=back, type=type, fronts=fronts, intents=intents
-#         )
-#         con.execute(c)
 
 
 def show_table(table_name):
