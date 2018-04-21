@@ -1,15 +1,11 @@
-########### Python 3.6 #############
-# -*- coding: utf-8 -*-
-
 import http.client, sys, os.path, json
 
 # Authoring key, available in luis.ai under Account Settings
-with open("auth/auth_key.txt") as f:
-    LUIS_authoringKey = f.read()
+with open("auth/keys.json") as f:
+    json_file = json.load(f)
+    LUIS_APP_ID = json_file["luis-app-id"]  # ID of your LUIS app to which you want to add an utterance
+    LUIS_authoringKey = json_file["luis"]
 
-# ID of your LUIS app to which you want to add an utterance
-with open("auth/app_id.txt") as f:
-    LUIS_APP_ID = f.read()
 
 # The version number of your LUIS app
 LUIS_APP_VERSION = "0.1"

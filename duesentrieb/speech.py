@@ -22,9 +22,9 @@ def getInput(use_speech=True, anounce=""):
                     say(anounce)
                 # audio = r.record(source=source, duration=5)
                 try:
-                    audio = r.listen(source, timeout=1,phrase_time_limit=3)
+                    audio = r.listen(source, timeout=5, phrase_time_limit=3)
                 except sr.WaitTimeoutError as e:
-                    print("-")
+                    print("-", end="")
                     continue
             print(".")
 
@@ -83,16 +83,25 @@ class Intent:
             'spellCheck': 'false',
             'staging': 'false',
         }
+        self.intent = None
+        self.score = None
+        self.entities = []
 
         try:
             r = requests.get(server, headers=headers, params=params)
-            # print(r.json())
-            self.intent = r.json()["topScoringIntent"]["intent"]
-        except Exception as e:
-            print("[Errno {0}] {1}".format(e.errno, e.strerror))
-            self.intent =  None
+            json_object = r.json()
+            print(json_object)
+            self.score = json_object["topScoringIntent"]["score"]
+            if self.score < 0.6:
+                raise Exception
+            self.intent = json_object["topScoringIntent"]["intent"]
+            self.entities = json_object["entities"]
 
-        print("You said: " + self.phrase, "->", self.intent)
+        except Exception as e:
+            pass  # no intent found
+            # print("[Errno {0}] {1}".format(e.errno, e.strerror))
+
+        print("You said: " + self.phrase, "->", self.intent, "({score})".format(score=self.score))
 
     def isCommand(self, cmd):
         if cmd in CONTROL_CMDS:

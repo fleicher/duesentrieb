@@ -1,19 +1,22 @@
+from typing import Union
+
 from duesentrieb.speech import Intent
 from duesentrieb.database import Element, has_topic
 from duesentrieb.speech import say
 
 USE_SPEECH = True
 
-def main_menu():
 
+def main_menu():
     while True:
 
-        topic = Intent(use_speech=USE_SPEECH, anounce="")
-        if has_topic(topic.intent):
-            recipe(topic.intent)
+        topic_intent = Intent(use_speech=USE_SPEECH, anounce="")
+        topic_name = checkmainmenu(topic_intent)
+        if topic_name is not None:
+            recipe(topic_name)
 
 
-def recipe(topic_name):  # type: (str) -> None
+def recipe(topic_name):  # type: (str) -> Union[str, None]
     print("start topic", topic_name)
     cur_rank = 0
     cur_element_id = 0
@@ -60,6 +63,17 @@ def recipe(topic_name):  # type: (str) -> None
                 cur_element_id = element.fronts[n]
                 lastlast_element_id = last_element_id
                 last_element_id = cur_element_id
+
+        res = checkmainmenu(intent)
+        if res is not None:
+            return res
+
+
+def checkmainmenu(intent):  # type: (Intent) -> Union[str, None]
+    if intent.isCommand("search"):
+        for entity in intent.entities:
+            if has_topic(entity["type"]):
+                return entity["type"]
 
 
 if __name__ == "__main__":

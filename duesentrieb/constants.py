@@ -9,6 +9,7 @@ CONTROL_CMDS = {
 
     "yes": "cmd_yes",
     "no": "cmd_no",
+    "search": "search",
 }
 
 DB_NAME = "duesentrieb.db"
