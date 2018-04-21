@@ -1,6 +1,6 @@
 from duesentrieb.speech import Intent
 from duesentrieb.database import Element, has_topic
-from duesentrieb.speech import getInput, say
+from duesentrieb.speech import say
 
 USE_SPEECH = True
 
