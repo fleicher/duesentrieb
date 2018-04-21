@@ -3,70 +3,100 @@ from random import randint
 from typing import List
 
 from duesentrieb.constants import DB_NAME
+from duesentrieb.speech import Intent
 
 
 class Element:
-    def __init__(self, table_name, id):
-        show_table(table_name)
+    def __init__(self, topic, id, rank=0):
+        # type: (str, int, int) -> None
+
         with sqlite3.connect(DB_NAME) as con:
-            c = 'SELECT type, description, back, fronts, intents FROM {table} WHERE id={id};'.format(
-                table=table_name, id=id
+            c = "SELECT type, fronts, intents FROM structure WHERE id='{id}' AND topic='{topic}';".format(
+                topic=topic, id=id
             )
-            res = con.execute(c)
-            for row in res:
-                # there should be only one row
+            row = con.execute(c).fetchone()
+            # there should be only one row
+            self.type = row[0]
+            self.fronts = [] if (row[1] == "None" or row[1] is None) else [int(i) for i in row[1].split(",")]  # type: List[int]
+            self.intents = [] if (row[2] == "None" or row[2] is None) else row[2].split(",")  # type: List[str]
 
-                self.type = row[0]
-                self.description = row[1]
-                self.back = None if (row[2] == "None" or row[2] is None) else int(row[2])  # type: List[int]
-                self.fronts = [] if (row[3] == "None" or row[3] is None) else [int(i) for i in row[3].split(",")]  # type: List[int]
-                self.intents = [] if (row[4] == "None" or row[4] is None) else row[4].split(",")  # type: List[str]
+            c = "SELECT description, rank, name FROM content WHERE id='{id}' AND topic='{topic}' ORDER BY rank;".format(
+                topic=topic, id=id
+            )
+            res = list(con.execute(c).fetchall())
+
+            rank %= len(res)
+            row = res[rank]
+            self.description = row[0]
+            self.rank = row[1]
+            self.name = int(row[2])
+
+    def addRang(self, val):
+        with sqlite3.connect(DB_NAME) as con:
+            self.rank += val
+            c = "UPDATE content (rank) VALUES ('{rank}');".format(
+                rank=self.rank
+            )
+            con.execute(c)
+
+# DataBase Formats
+# structure (topic, id, type, fronts, intents)
+# content (topic, message, id, rank)
 
 
-def setup_database(table_name):
-    """
-    Create the `user_string` table in the database
-    on server startup
-    """
+def setup_database():
     with sqlite3.connect(DB_NAME) as con:
-        con.execute("CREATE TABLE IF NOT EXISTS {table} "
-                    "(id VARCHAR, type INT, description, TEXT, back INT, fronts VARCHAR, intents VARCHAR);".format(table=table_name))
+        con.execute("CREATE TABLE IF NOT EXISTS structure "
+                    "(topic VARCHAR, id INT, type VARCHAR, fronts VARCHAR, intents VARCHAR);")
+        con.execute("CREATE TABLE IF NOT EXISTS content "
+                    "(topic VARCHAR, id INT, name INT, description TEXT, rank FLOAT);")
 
 
-def insert_element(table_name, description, back, id=None, type="statement", fronts=None, intents=None):
+def insert_element(topic, description, id=None, type="statement", fronts=None, intents=None):
     if id is None:
-        id = randint(1, 100000)
+        id = randint(1, 1000000)
+    name = randint(1, 1000000)
+
     with sqlite3.connect(DB_NAME) as con:
-        c = "INSERT INTO {table} (id, description, back, type, fronts, intents) VALUES ({id}, '{desc}', '{back}', '{type}', '{fronts}', '{intents}');".format(
-            table=table_name, id=id, desc=description, back=back, type=type, fronts=fronts, intents=intents
+        c = "SELECT EXISTS(SELECT * FROM structure WHERE topic='{topic}' AND id='{id}');"
+        res = con.execute(c)
+        for row in res:
+            if not row[0]:
+                c = "INSERT INTO structure (topic, id, type, fronts, intents) VALUES ('{topic}', '{id}', '{type}', " \
+                    "'{fronts}', '{intents}');".format(
+                    topic=topic, id=id, desc=description, type=type, fronts=fronts, intents=intents
+                )
+                con.execute(c)
+
+        c = "INSERT INTO content (topic, id, name, description, rank) VALUES ('{topic}', '{id}', '{name}', '{desc}', '{rank}');".format(
+            topic=topic, id=id, desc=description, rank=0.0, name=name
         )
-        print(c)
         con.execute(c)
 
 
-def update_element(table_name, description, back, id, type="statement", fronts=None, intents=None):
-    with sqlite3.connect(DB_NAME) as con:
-        c = "UPDATE {table} (id, description, back, type, fronts, intents) VALUES ({id}, '{desc}', '{back}', '{type}', '{fronts}', '{intents}');".format(
-            table=table_name, id=id, desc=description, back=back, type=type, fronts=fronts, intents=intents
-        )
-        print(c)
-        con.execute(c)
-
+# def update_element(table_name, description, back, id, type="statement", fronts=None, intents=None):
+#     with sqlite3.connect(DB_NAME) as con:
+#         c = "UPDATE {table} (id, description, back, type, fronts, intents) VALUES ({id}, '{desc}', '{back}', '{type}', '{fronts}', '{intents}');".format(
+#             table=table_name, id=id, desc=description, back=back, type=type, fronts=fronts, intents=intents
+#         )
+#         con.execute(c)
 
 
 def show_table(table_name):
     with sqlite3.connect(DB_NAME) as con:
         c = "SELECT * FROM {table};".format(table=table_name)
-        print(c)
         res = con.execute(c)
         for row in res:
             print(row)
 
 
-def cleanup_database(table_name):
-    """
-    Destroy the `user_string` table from the database
-    on server shutdown.
-    """
+def remove_table(table_name):
     with sqlite3.connect(DB_NAME) as con:
-        con.execute("DROP TABLE ?", [table_name])
+        con.execute("DROP TABLE {table}".format(table=table_name))
+
+
+def has_topic(topic_name):
+    with sqlite3.connect(DB_NAME) as con:
+        res = con.execute("SELECT EXISTS(SELECT * FROM structure WHERE topic='{topic}');".format(topic=topic_name))
+        row = res.fetchone()
+        return True if row[0] else False

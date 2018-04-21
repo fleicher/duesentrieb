@@ -1,2 +1,3 @@
-pyttsx
+pyttsx3
 requests
+SpeechRecognition
