@@ -2,7 +2,7 @@
 # Requires PyAudio and PySpeech.
 
 import speech_recognition as sr
-import pyttsx3
+import json
 
 import requests
 from duesentrieb.constants import CONTROL_CMDS
@@ -48,16 +48,22 @@ def getInput(use_speech=True, anounce=""):
 
 
 def say(text):
-    engine = pyttsx3.init()
+    from duesentrieb.azuretts import say_azure
     print("saying:", text)
-    engine.say(text)
-    engine.runAndWait()
+    say_azure(text)
+
+    # import pyttsx3
+
+    # engine = pyttsx3.init()
+    # print("saying:", text)
+    # engine.say(text)
+    # engine.runAndWait()
 
 
-with open("auth/key.txt") as f:
-    key = f.read()
-with open("auth/server.txt") as f:
-    server = f.read()
+with open("auth/keys.json") as f:
+    key = json.load(f)["luis"]
+
+server = "https://westeurope.api.cognitive.microsoft.com/luis/v2.0/apps/c5027c65-c894-4eac-abe2-186faf2f7262"
 headers = {
     # Request headers
     'Ocp-Apim-Subscription-Key': key,

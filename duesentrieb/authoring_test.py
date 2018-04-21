@@ -15,8 +15,7 @@ with open("auth/app_id.txt") as f:
 LUIS_APP_VERSION = "0.1"
 
 # Update the host if your LUIS subscription is not in the West US region
-with open("auth/luis_server.txt") as f:
-    LUIS_HOST = f.read()
+LUIS_HOST = "westeurope.api.cognitive.microsoft.com"
 # uploadFile is the file containing JSON for utterance(s) to add to the LUIS app.
 # The contents of the file must be in this format described at: https://aka.ms/add-utterance-json-format
 
