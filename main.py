@@ -29,7 +29,9 @@ def recipe(topic_name):  # type: (str) -> Union[str, None]
             return  # reached end of loop
 
         intent = Intent(use_speech=USE_SPEECH)
-
+        if intent.intent is None:
+            # no intent detected.
+            continue
         if intent.isCommand("repeat"):
             continue
         if intent.isCommand("prev"):
