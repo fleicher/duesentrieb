@@ -1,0 +1,12 @@
+[
+    {
+        "text": "go to Seattle",
+        "intentName": "FixTire",
+        "entityLabels": []
+    },
+    {
+        "text": "go fix it",
+        "intentName": "FixTire",
+        "entityLabels": []
+    }
+]

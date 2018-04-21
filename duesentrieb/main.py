@@ -1,12 +1,13 @@
 from duesentrieb.intents import Intent
 from duesentrieb.constants import TABLE_CMDS
 from duesentrieb.database import Element
+from duesentrieb.speech import getInput
 
 
 def main_menu():
     while True:
 
-        cmd = input("Enter next command.")
+        cmd = getInput(use_speech=True, anounce="You are in the main menu:")
         topic = Intent(cmd)
         print(topic.intent)
         if topic.intent in TABLE_CMDS:
@@ -20,7 +21,7 @@ def recipe(topic):  # type: (Intent) -> None
         element = Element(topic.intent, cur_element_id)
         print(element.description)
 
-        cmd = input("Enter next command")
+        cmd = getInput(use_speech=True, anounce="[Topic {topic}@{id}] What shall I do?".format(topic=topic.intent, id=cur_element_id))
         intent = Intent(cmd)
 
         if intent.isCommand("repeat"):
