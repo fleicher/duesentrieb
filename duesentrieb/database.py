@@ -91,8 +91,11 @@ def show_table(table_name):
 
 
 def remove_table(table_name):
-    with sqlite3.connect(DB_NAME) as con:
-        con.execute("DROP TABLE {table}".format(table=table_name))
+    try:
+        with sqlite3.connect(DB_NAME) as con:
+            con.execute("DROP TABLE {table}".format(table=table_name))
+    except sqlite3.OperationalError:
+        pass
 
 
 def has_topic(topic_name):
