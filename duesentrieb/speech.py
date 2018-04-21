@@ -10,17 +10,19 @@ from duesentrieb.constants import CONTROL_CMDS
 
 def getInput(use_speech=True, anounce=""):
     if use_speech:
+        r = sr.Recognizer()
+        with sr.Microphone() as source:
+            r.adjust_for_ambient_noise(source)
+            print("Speak now:", anounce)
 
         while True:
             # Record Audio
-            r = sr.Recognizer()
             with sr.Microphone() as source:
                 if anounce != "":
                     say(anounce)
-                print(":", anounce)
                 # audio = r.record(source=source, duration=5)
                 try:
-                    audio = r.listen(source, timeout=5)
+                    audio = r.listen(source, timeout=1,phrase_time_limit=3)
                 except sr.WaitTimeoutError as e:
                     print("-")
                     continue
@@ -33,11 +35,14 @@ def getInput(use_speech=True, anounce=""):
                 # instead of `r.recognize_google(audio)`
                 txt = r.recognize_google(audio, language="en-US")
                 return txt
+            except LookupError:
+                print("Couldn't understand audio")
             except sr.UnknownValueError:
                 print("Google Speech Recognition could not understand audio")
             except sr.RequestError as e:
                 print("Could not request results from Google Speech Recognition service; {0}".format(e))
-
+            except Exception as e:
+                print("general:", e)
     else:
         return input(anounce)
 
@@ -60,11 +65,12 @@ headers = {
 
 
 class Intent:
-    @staticmethod
-    def getIntent(phrase):
+
+    def __init__(self, use_speech=True, anounce=""):
+        self.phrase = getInput(use_speech=use_speech, anounce=anounce)
         params = {
             # Query parameter
-            'q': phrase,
+            'q': self.phrase,
             # Optional request parameters, set to default values
             'timezoneOffset': '0',
             'verbose': 'false',
@@ -75,14 +81,11 @@ class Intent:
         try:
             r = requests.get(server, headers=headers, params=params)
             # print(r.json())
-            return r.json()["topScoringIntent"]["intent"]
+            self.intent = r.json()["topScoringIntent"]["intent"]
         except Exception as e:
             print("[Errno {0}] {1}".format(e.errno, e.strerror))
-            return None
+            self.intent =  None
 
-    def __init__(self, use_speech=True, anounce=""):
-        self.phrase = getInput(use_speech=use_speech, anounce=anounce)
-        self.intent = Intent.getIntent(self.phrase)  # type: str
         print("You said: " + self.phrase, "->", self.intent)
 
     def isCommand(self, cmd):
@@ -91,3 +94,6 @@ class Intent:
                 return True
 
         return False
+
+    def __repr__(self):
+        return "<Intent " + self.intent + ">"

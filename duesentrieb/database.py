@@ -8,7 +8,8 @@ from duesentrieb.constants import DB_NAME
 class Element:
     def __init__(self, topic, id, rank=0):
         # type: (str, int, int) -> None
-
+        self.topic = topic
+        self.id = id
         with sqlite3.connect(DB_NAME) as con:
             c = "SELECT type, fronts, intents FROM structure WHERE id='{id}' AND topic='{topic}';".format(
                 topic=topic, id=id
@@ -32,10 +33,11 @@ class Element:
             self.name = int(row[2])
 
     def addRang(self, val):
+        assert self.name is not None
         with sqlite3.connect(DB_NAME) as con:
             self.rank += val
-            c = "UPDATE content (rank) VALUES ('{rank}');".format(
-                rank=self.rank
+            c = "UPDATE content SET rank = '{rank}' WHERE name='{name}';".format(
+                rank=int(self.rank), name=self.name
             )
             con.execute(c)
 

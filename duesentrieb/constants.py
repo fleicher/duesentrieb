@@ -1,7 +1,3 @@
-from enum import Enum
-from collections import namedtuple
-
-
 CONTROL_CMDS = {
     "next": "cmd_next",
     "prev": "cmd_prev",
