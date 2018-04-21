@@ -3,7 +3,6 @@ from random import randint
 from typing import List
 
 from duesentrieb.constants import DB_NAME
-from duesentrieb.speech import Intent
 
 
 class Element:
@@ -17,7 +16,8 @@ class Element:
             row = con.execute(c).fetchone()
             # there should be only one row
             self.type = row[0]
-            self.fronts = [] if (row[1] == "None" or row[1] is None) else [int(i) for i in row[1].split(",")]  # type: List[int]
+            self.fronts = [] if (row[1] == "None" or row[1] is None) else [
+                int(i) for i in row[1].split(",")]  # type: List[int]
             self.intents = [] if (row[2] == "None" or row[2] is None) else row[2].split(",")  # type: List[str]
 
             c = "SELECT description, rank, name FROM content WHERE id='{id}' AND topic='{topic}' ORDER BY rank;".format(
@@ -52,21 +52,19 @@ def setup_database():
                     "(topic VARCHAR, id INT, name INT, description TEXT, rank FLOAT);")
 
 
-def insert_element(topic, description, id=None, type="statement", fronts=None, intents=None):
+def insert_element(topic, description, id=None, type="statement", fronts=None, intents=None, add_structure=True):
     if id is None:
         id = randint(1, 1000000)
     name = randint(1, 1000000)
 
     with sqlite3.connect(DB_NAME) as con:
-        c = "SELECT EXISTS(SELECT * FROM structure WHERE topic='{topic}' AND id='{id}');"
-        res = con.execute(c)
-        for row in res:
-            if not row[0]:
-                c = "INSERT INTO structure (topic, id, type, fronts, intents) VALUES ('{topic}', '{id}', '{type}', " \
-                    "'{fronts}', '{intents}');".format(
-                    topic=topic, id=id, desc=description, type=type, fronts=fronts, intents=intents
-                )
-                con.execute(c)
+        # c = "SELECT EXISTS(SELECT * FROM structure WHERE topic='{topic}' AND id='{id}');"
+        if add_structure:  # not con.execute(c).fetchone()[0]:
+            c = "INSERT INTO structure (topic, id, type, fronts, intents) VALUES ('{topic}', '{id}', '{type}', " \
+                "'{fronts}', '{intents}');".format(
+                topic=topic, id=id, desc=description, type=type, fronts=fronts, intents=intents
+            )
+            con.execute(c)
 
         c = "INSERT INTO content (topic, id, name, description, rank) VALUES ('{topic}', '{id}', '{name}', '{desc}', '{rank}');".format(
             topic=topic, id=id, desc=description, rank=0.0, name=name

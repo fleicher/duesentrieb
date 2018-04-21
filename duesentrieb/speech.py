@@ -17,8 +17,13 @@ def getInput(use_speech=True, anounce=""):
             with sr.Microphone() as source:
                 if anounce != "":
                     say(anounce)
+                print(":", anounce)
                 # audio = r.record(source=source, duration=5)
-                audio = r.listen(source)
+                try:
+                    audio = r.listen(source, timeout=5)
+                except sr.WaitTimeoutError as e:
+                    print("-")
+                    continue
             print(".")
 
             # Speech recognition using Google Speech Recognition

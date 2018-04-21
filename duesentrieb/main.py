@@ -6,7 +6,7 @@ from duesentrieb.speech import getInput, say
 def main_menu():
     while True:
 
-        topic = Intent(use_speech=True, anounce="You are in the main menu:")
+        topic = Intent(use_speech=True, anounce="")
         if has_topic(topic.intent):
             recipe(topic.intent)
 
@@ -19,6 +19,8 @@ def recipe(topic_name):  # type: (str) -> None
     lastlast_element_id = 0
     while True:
         element = Element(topic_name, cur_element_id, rank=cur_rank)
+        if 0 in element.fronts:
+            return  # reached end of loop
         say(element.description)
         cmd = getInput(use_speech=True)
         intent = Intent(cmd)
@@ -41,6 +43,7 @@ def recipe(topic_name):  # type: (str) -> None
 
         if intent.isCommand("alternative"):
             cur_rank += 1
+            continue
 
         if element.type == "statement" and intent.isCommand("next"):
             assert len(element.fronts) == 1
