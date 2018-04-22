@@ -1,3 +1,4 @@
+simpleaudio
 pyttsx3
 requests
 SpeechRecognition
