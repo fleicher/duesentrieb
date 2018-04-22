@@ -35,7 +35,7 @@ def get_command(announce=""):
                 except sr.WaitTimeoutError:
                     # reset the listener as otherwise the files can get to large for the Google Speech2Text service
                     continue
-            print("Detected voice")
+            # print("Detected voice")
 
             try:
                 # Speech recognition using Google Speech Recognition
