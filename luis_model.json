@@ -1,0 +1,765 @@
+{
+  "luis_schema_version": "2.2.0",
+  "versionId": "0.1",
+  "name": "Duesentrieb",
+  "desc": "A Conversational Speech Interface",
+  "culture": "en-us",
+  "intents": [
+    {
+      "name": "cmd_alternative"
+    },
+    {
+      "name": "cmd_main"
+    },
+    {
+      "name": "cmd_next"
+    },
+    {
+      "name": "cmd_no"
+    },
+    {
+      "name": "cmd_prev"
+    },
+    {
+      "name": "cmd_repeat"
+    },
+    {
+      "name": "cmd_right"
+    },
+    {
+      "name": "cmd_wrong"
+    },
+    {
+      "name": "cmd_yes"
+    },
+    {
+      "name": "None"
+    },
+    {
+      "name": "search"
+    }
+  ],
+  "entities": [
+    {
+      "name": "topic_bike"
+    },
+    {
+      "name": "topic_carrotcake"
+    }
+  ],
+  "composites": [],
+  "closedLists": [],
+  "regex_entities": [],
+  "bing_entities": [],
+  "model_features": [],
+  "regex_features": [],
+  "utterances": [
+    {
+      "text": "alexa repair my bike",
+      "intent": "search",
+      "entities": [
+        {
+          "entity": "topic_bike",
+          "startPos": 16,
+          "endPos": 19
+        }
+      ]
+    },
+    {
+      "text": "all right",
+      "intent": "cmd_yes",
+      "entities": []
+    },
+    {
+      "text": "alternate",
+      "intent": "cmd_alternative",
+      "entities": []
+    },
+    {
+      "text": "alternative",
+      "intent": "cmd_alternative",
+      "entities": []
+    },
+    {
+      "text": "another advice would be helpful",
+      "intent": "cmd_alternative",
+      "entities": []
+    },
+    {
+      "text": "another version",
+      "intent": "cmd_alternative",
+      "entities": []
+    },
+    {
+      "text": "aye",
+      "intent": "cmd_yes",
+      "entities": []
+    },
+    {
+      "text": "can you look up another thing",
+      "intent": "cmd_main",
+      "entities": []
+    },
+    {
+      "text": "cancel",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "certainly",
+      "intent": "cmd_yes",
+      "entities": []
+    },
+    {
+      "text": "could you please show me an other advice",
+      "intent": "cmd_alternative",
+      "entities": []
+    },
+    {
+      "text": "could you suggest a nice vegan cake recipe?",
+      "intent": "search",
+      "entities": [
+        {
+          "entity": "topic_carrotcake",
+          "startPos": 25,
+          "endPos": 29
+        },
+        {
+          "entity": "topic_carrotcake",
+          "startPos": 31,
+          "endPos": 34
+        },
+        {
+          "entity": "topic_carrotcake",
+          "startPos": 36,
+          "endPos": 41
+        }
+      ]
+    },
+    {
+      "text": "done",
+      "intent": "cmd_next",
+      "entities": []
+    },
+    {
+      "text": "exactly",
+      "intent": "cmd_yes",
+      "entities": []
+    },
+    {
+      "text": "false",
+      "intent": "cmd_wrong",
+      "entities": []
+    },
+    {
+      "text": "find a bike repairer",
+      "intent": "search",
+      "entities": [
+        {
+          "entity": "topic_bike",
+          "startPos": 7,
+          "endPos": 10
+        },
+        {
+          "entity": "topic_bike",
+          "startPos": 12,
+          "endPos": 19
+        }
+      ]
+    },
+    {
+      "text": "find a carrotcake",
+      "intent": "search",
+      "entities": [
+        {
+          "entity": "topic_carrotcake",
+          "startPos": 7,
+          "endPos": 16
+        }
+      ]
+    },
+    {
+      "text": "gave me a carrotcake recipe",
+      "intent": "search",
+      "entities": [
+        {
+          "entity": "topic_carrotcake",
+          "startPos": 10,
+          "endPos": 19
+        }
+      ]
+    },
+    {
+      "text": "give me an alternate please",
+      "intent": "cmd_alternative",
+      "entities": []
+    },
+    {
+      "text": "go ahead",
+      "intent": "cmd_next",
+      "entities": []
+    },
+    {
+      "text": "go back",
+      "intent": "cmd_prev",
+      "entities": []
+    },
+    {
+      "text": "go on",
+      "intent": "cmd_next",
+      "entities": []
+    },
+    {
+      "text": "good bye",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "good i want that",
+      "intent": "cmd_next",
+      "entities": []
+    },
+    {
+      "text": "got that",
+      "intent": "cmd_next",
+      "entities": []
+    },
+    {
+      "text": "gotomenu",
+      "intent": "cmd_main",
+      "entities": []
+    },
+    {
+      "text": "home",
+      "intent": "cmd_main",
+      "entities": []
+    },
+    {
+      "text": "i am done.",
+      "intent": "cmd_next",
+      "entities": []
+    },
+    {
+      "text": "i am ready.",
+      "intent": "cmd_next",
+      "entities": []
+    },
+    {
+      "text": "i didnt understood",
+      "intent": "cmd_repeat",
+      "entities": []
+    },
+    {
+      "text": "i dont understand",
+      "intent": "cmd_repeat",
+      "entities": []
+    },
+    {
+      "text": "i don't want that",
+      "intent": "cmd_no",
+      "entities": []
+    },
+    {
+      "text": "i got that.",
+      "intent": "cmd_next",
+      "entities": []
+    },
+    {
+      "text": "i liked how you put that",
+      "intent": "cmd_right",
+      "entities": []
+    },
+    {
+      "text": "i need an idea for baking a cake",
+      "intent": "search",
+      "entities": [
+        {
+          "entity": "topic_carrotcake",
+          "startPos": 19,
+          "endPos": 24
+        },
+        {
+          "entity": "topic_carrotcake",
+          "startPos": 28,
+          "endPos": 31
+        }
+      ]
+    },
+    {
+      "text": "i need help chaning my flat tyre",
+      "intent": "search",
+      "entities": [
+        {
+          "entity": "topic_bike",
+          "startPos": 23,
+          "endPos": 26
+        },
+        {
+          "entity": "topic_bike",
+          "startPos": 28,
+          "endPos": 31
+        }
+      ]
+    },
+    {
+      "text": "i want to fix my bicycle tyre.",
+      "intent": "search",
+      "entities": [
+        {
+          "entity": "topic_bike",
+          "startPos": 10,
+          "endPos": 12
+        },
+        {
+          "entity": "topic_bike",
+          "startPos": 17,
+          "endPos": 23
+        },
+        {
+          "entity": "topic_bike",
+          "startPos": 25,
+          "endPos": 28
+        }
+      ]
+    },
+    {
+      "text": "i want to repair my bike",
+      "intent": "search",
+      "entities": [
+        {
+          "entity": "topic_bike",
+          "startPos": 20,
+          "endPos": 23
+        }
+      ]
+    },
+    {
+      "text": "i want to upvote this step",
+      "intent": "cmd_right",
+      "entities": []
+    },
+    {
+      "text": "last page",
+      "intent": "cmd_prev",
+      "entities": []
+    },
+    {
+      "text": "look for bike repair",
+      "intent": "search",
+      "entities": [
+        {
+          "entity": "topic_bike",
+          "startPos": 9,
+          "endPos": 12
+        }
+      ]
+    },
+    {
+      "text": "main",
+      "intent": "cmd_main",
+      "entities": []
+    },
+    {
+      "text": "mainmenu",
+      "intent": "cmd_main",
+      "entities": []
+    },
+    {
+      "text": "menu",
+      "intent": "cmd_main",
+      "entities": []
+    },
+    {
+      "text": "move on to the next step",
+      "intent": "cmd_next",
+      "entities": []
+    },
+    {
+      "text": "my bike",
+      "intent": "search",
+      "entities": [
+        {
+          "entity": "topic_bike",
+          "startPos": 3,
+          "endPos": 6
+        }
+      ]
+    },
+    {
+      "text": "next",
+      "intent": "cmd_next",
+      "entities": []
+    },
+    {
+      "text": "next one",
+      "intent": "cmd_next",
+      "entities": []
+    },
+    {
+      "text": "nextstep",
+      "intent": "cmd_next",
+      "entities": []
+    },
+    {
+      "text": "no",
+      "intent": "cmd_no",
+      "entities": []
+    },
+    {
+      "text": "no i don't need one",
+      "intent": "cmd_no",
+      "entities": []
+    },
+    {
+      "text": "no, that is fine",
+      "intent": "cmd_no",
+      "entities": []
+    },
+    {
+      "text": "nope",
+      "intent": "cmd_no",
+      "entities": []
+    },
+    {
+      "text": "of course",
+      "intent": "cmd_yes",
+      "entities": []
+    },
+    {
+      "text": "ok",
+      "intent": "cmd_next",
+      "entities": []
+    },
+    {
+      "text": "ok got that",
+      "intent": "cmd_next",
+      "entities": []
+    },
+    {
+      "text": "ok next",
+      "intent": "cmd_next",
+      "entities": []
+    },
+    {
+      "text": "ok, give me that",
+      "intent": "cmd_next",
+      "entities": []
+    },
+    {
+      "text": "ok, next",
+      "intent": "cmd_next",
+      "entities": []
+    },
+    {
+      "text": "ok, next step",
+      "intent": "cmd_next",
+      "entities": []
+    },
+    {
+      "text": "ok, that is cool",
+      "intent": "cmd_next",
+      "entities": []
+    },
+    {
+      "text": "okay",
+      "intent": "cmd_yes",
+      "entities": []
+    },
+    {
+      "text": "one time back",
+      "intent": "cmd_prev",
+      "entities": []
+    },
+    {
+      "text": "please give me a tip",
+      "intent": "cmd_yes",
+      "entities": []
+    },
+    {
+      "text": "please help me fixing my bike",
+      "intent": "search",
+      "entities": [
+        {
+          "entity": "topic_bike",
+          "startPos": 25,
+          "endPos": 28
+        }
+      ]
+    },
+    {
+      "text": "please tell me the advice one more time",
+      "intent": "cmd_repeat",
+      "entities": []
+    },
+    {
+      "text": "previous page",
+      "intent": "cmd_prev",
+      "entities": []
+    },
+    {
+      "text": "repair my bike",
+      "intent": "search",
+      "entities": [
+        {
+          "entity": "topic_bike",
+          "startPos": 10,
+          "endPos": 13
+        }
+      ]
+    },
+    {
+      "text": "repeat",
+      "intent": "cmd_repeat",
+      "entities": []
+    },
+    {
+      "text": "repeat the explanation",
+      "intent": "cmd_repeat",
+      "entities": []
+    },
+    {
+      "text": "replay the advice",
+      "intent": "cmd_repeat",
+      "entities": []
+    },
+    {
+      "text": "reshow me the tutorial",
+      "intent": "cmd_repeat",
+      "entities": []
+    },
+    {
+      "text": "return",
+      "intent": "cmd_prev",
+      "entities": []
+    },
+    {
+      "text": "search for a bike repair",
+      "intent": "search",
+      "entities": [
+        {
+          "entity": "topic_bike",
+          "startPos": 13,
+          "endPos": 16
+        }
+      ]
+    },
+    {
+      "text": "search for a nice carrot cake recipe",
+      "intent": "search",
+      "entities": [
+        {
+          "entity": "topic_carrotcake",
+          "startPos": 18,
+          "endPos": 23
+        },
+        {
+          "entity": "topic_carrotcake",
+          "startPos": 25,
+          "endPos": 28
+        }
+      ]
+    },
+    {
+      "text": "search for a nice vegan meal",
+      "intent": "search",
+      "entities": [
+        {
+          "entity": "topic_carrotcake",
+          "startPos": 18,
+          "endPos": 22
+        },
+        {
+          "entity": "topic_carrotcake",
+          "startPos": 24,
+          "endPos": 27
+        }
+      ]
+    },
+    {
+      "text": "search for carrot cake",
+      "intent": "search",
+      "entities": [
+        {
+          "entity": "topic_carrotcake",
+          "startPos": 11,
+          "endPos": 16
+        },
+        {
+          "entity": "topic_carrotcake",
+          "startPos": 18,
+          "endPos": 21
+        }
+      ]
+    },
+    {
+      "text": "search for somebody who repairs my bike",
+      "intent": "search",
+      "entities": [
+        {
+          "entity": "topic_bike",
+          "startPos": 35,
+          "endPos": 38
+        }
+      ]
+    },
+    {
+      "text": "search solution for my flat tire",
+      "intent": "search",
+      "entities": [
+        {
+          "entity": "topic_bike",
+          "startPos": 23,
+          "endPos": 26
+        },
+        {
+          "entity": "topic_bike",
+          "startPos": 28,
+          "endPos": 31
+        }
+      ]
+    },
+    {
+      "text": "search the web for how to repair my bike tyre",
+      "intent": "search",
+      "entities": [
+        {
+          "entity": "topic_bike",
+          "startPos": 36,
+          "endPos": 39
+        },
+        {
+          "entity": "topic_bike",
+          "startPos": 41,
+          "endPos": 44
+        }
+      ]
+    },
+    {
+      "text": "show me an other alternative please",
+      "intent": "cmd_alternative",
+      "entities": []
+    },
+    {
+      "text": "show me how to fix a bicycle tyre",
+      "intent": "search",
+      "entities": [
+        {
+          "entity": "topic_bike",
+          "startPos": 21,
+          "endPos": 27
+        },
+        {
+          "entity": "topic_bike",
+          "startPos": 29,
+          "endPos": 32
+        }
+      ]
+    },
+    {
+      "text": "show me that",
+      "intent": "cmd_next",
+      "entities": []
+    },
+    {
+      "text": "sure",
+      "intent": "cmd_yes",
+      "entities": []
+    },
+    {
+      "text": "tell me an alternative",
+      "intent": "cmd_alternative",
+      "entities": []
+    },
+    {
+      "text": "thank you for helping",
+      "intent": "cmd_main",
+      "entities": []
+    },
+    {
+      "text": "that is a good answer",
+      "intent": "cmd_right",
+      "entities": []
+    },
+    {
+      "text": "that was a good description",
+      "intent": "cmd_right",
+      "entities": []
+    },
+    {
+      "text": "thats not the case",
+      "intent": "cmd_wrong",
+      "entities": []
+    },
+    {
+      "text": "thats the case",
+      "intent": "cmd_yes",
+      "entities": []
+    },
+    {
+      "text": "this was a good answer",
+      "intent": "cmd_right",
+      "entities": []
+    },
+    {
+      "text": "true",
+      "intent": "cmd_yes",
+      "entities": []
+    },
+    {
+      "text": "vegan cake",
+      "intent": "search",
+      "entities": [
+        {
+          "entity": "topic_carrotcake",
+          "startPos": 0,
+          "endPos": 4
+        },
+        {
+          "entity": "topic_carrotcake",
+          "startPos": 6,
+          "endPos": 9
+        }
+      ]
+    },
+    {
+      "text": "what",
+      "intent": "cmd_repeat",
+      "entities": []
+    },
+    {
+      "text": "whats the alternative",
+      "intent": "cmd_alternative",
+      "entities": []
+    },
+    {
+      "text": "wrong",
+      "intent": "cmd_wrong",
+      "entities": []
+    },
+    {
+      "text": "yea",
+      "intent": "cmd_yes",
+      "entities": []
+    },
+    {
+      "text": "yep",
+      "intent": "cmd_yes",
+      "entities": []
+    },
+    {
+      "text": "yes",
+      "intent": "cmd_yes",
+      "entities": []
+    },
+    {
+      "text": "yes i want a tip",
+      "intent": "cmd_yes",
+      "entities": []
+    },
+    {
+      "text": "yes, let's begin",
+      "intent": "cmd_yes",
+      "entities": []
+    }
+  ]
+}

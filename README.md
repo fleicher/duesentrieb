@@ -31,6 +31,7 @@ These keys shall then be stored in a json file in the folder auth/ which should 
 }
 ```
 
+The Luis utterance database is stored in luis_model.json.
 
 ## Database
 
