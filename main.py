@@ -12,13 +12,19 @@ from duesentrieb.constants import CONTROL_CMDS as CMD
 
 
 def main(be_quiet=None):
+    use_that = False
     if be_quiet is not None:
         duesentrieb.constants.be_quiet = be_quiet
     while True:
-        topic_intent = Intent(announce="")
-        topic_name = check_for_search(topic_intent)
+        if not use_that:
+            topic_intent = Intent(announce="")
+            topic_name = check_for_search(topic_intent)
+        use_that = False
+
         if topic_name is not None and topic_name != "no_entity":
-            iterate_through_instructions(topic_name)
+            topic_name = iterate_through_instructions(topic_name)
+            if topic_name is not None and topic_name != "no_entity":
+                use_that = True
 
 
 def iterate_through_instructions(topic_name):  # type: (str) -> Union[str, None]
@@ -86,7 +92,7 @@ def iterate_through_instructions(topic_name):  # type: (str) -> Union[str, None]
 
         # query if
         res = check_for_search(intent)
-        if res is not None:
+        if res is not None and res != "no_entity":
             # the user has started a new search
             return res
 
