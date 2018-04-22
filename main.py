@@ -12,10 +12,12 @@ from duesentrieb.constants import CONTROL_CMDS as CMD
 
 
 def main(be_quiet=None):
-    use_that = False
+    use_that = False  # True if the last command already contains a new topic to search for.
     if be_quiet is not None:
+        # turn of audio speech
         duesentrieb.constants.be_quiet = be_quiet
     while True:
+        # main loop asking which is the next topic
         if not use_that:
             topic_intent = Intent(announce="")
             topic_name = check_for_search(topic_intent)
