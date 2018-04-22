@@ -11,7 +11,7 @@ from xml.etree import ElementTree
 from duesentrieb.constants import be_quiet, INTENT_CERTAINTY_THESHOLD
 
 
-def get_command(anounce=""):
+def get_command(announce=""):
     # type: (str) -> str
     """
     ask the user what they want to do next. Before listening the announce text is played
@@ -23,13 +23,13 @@ def get_command(anounce=""):
         r = sr.Recognizer()
         with sr.Microphone() as source:
             r.adjust_for_ambient_noise(source)
-            print("Speak now:", anounce)
+            print("Speak now:", announce)
 
         while True:
             # Record Audio
             with sr.Microphone() as source:
-                if anounce != "":
-                    say(anounce)
+                if announce != "":
+                    say(announce)
                 try:
                     audio = r.listen(source, timeout=10, phrase_time_limit=5)
                 except sr.WaitTimeoutError:
@@ -47,7 +47,7 @@ def get_command(anounce=""):
             except sr.RequestError as e:
                 print("Could not request results from Google Speech Recognition service; {0}".format(e))
     else:
-        return input(anounce)
+        return input(announce)
 
 
 def say_azure(text):
@@ -58,18 +58,18 @@ def say_azure(text):
     """
     with open("auth/keys.json") as f:
         keys = json.load(f)
-        apiKey = keys["bing-speech"]
+        api_key = keys["bing-speech"]
 
     params = ""
-    headers = {"Ocp-Apim-Subscription-Key": apiKey}
+    headers = {"Ocp-Apim-Subscription-Key": api_key}
 
     # AccessTokenUri = "https://api.cognitive.microsoft.com/sts/v1.0/issueToken";
-    AccessTokenHost = "api.cognitive.microsoft.com"
+    access_token_host = "api.cognitive.microsoft.com"
     path = "/sts/v1.0/issueToken"
 
     # Connect to server to get the Access Token
     # print("Connect to server to get the Access Token")
-    conn = http.client.HTTPSConnection(AccessTokenHost)
+    conn = http.client.HTTPSConnection(access_token_host)
     conn.request("POST", path, params, headers)
     response = conn.getresponse()
 
@@ -118,10 +118,10 @@ def say_pyttsx(text):
     engine.say(text)
     engine.runAndWait()
 
+
 def say(text, use_azure=True):
     # type: (str, bool) -> None
-    # entry method for Text2Speech
-    from duesentrieb.azuretts import say_azure
+    """ entry method for Text2Speech """
     print("saying:", text)
     if use_azure:
         say_azure(text)
@@ -132,7 +132,7 @@ def say(text, use_azure=True):
 class Intent:
     """ query the Azure server for a intent for the extracted command by the user."""
     def __init__(self, announce=""):
-        self.phrase = get_command(anounce=announce)
+        self.phrase = get_command(announce=announce)
         params = {
             # Query parameter
             'q': self.phrase,

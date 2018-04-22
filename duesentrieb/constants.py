@@ -11,7 +11,8 @@ CONTROL_CMDS = namedtuple("Commands", [
     "no",  # command 'no' for answering questions
     "search",  # command to search for a new instructions in the database
 ])(next="cmd_next", prev="cmd_prev", repeat="cmd_repeat", alternative="cmd_alternative", wrong="cmd_wrong",
-   right="cmd_right", yes="cmd_yes", search="search", main="cmd_main", no="cmd_no")  # dict matching the internal representation of
+   right="cmd_right", yes="cmd_yes", search="search", main="cmd_main", no="cmd_no")
+# dict matching the internal representation of the commands representation of in LUIS intents
 
 DB_NAME = "duesentrieb.db"  # absolute path of sqlite database with the instruction steps
 be_quiet = False  # True: use text input, False: speech input (can be overwritten by command line arguments)
