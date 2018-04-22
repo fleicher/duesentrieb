@@ -97,10 +97,11 @@ def say_azure(text):
     conn = http.client.HTTPSConnection("speech.platform.bing.com")
     conn.request("POST", "/synthesize", ElementTree.tostring(body), headers)
     response = conn.getresponse()
-    conn.close()
 
     # temporarily write sound as file and then play it TODO: do this directly
     data = response.read()
+    conn.close()
+
     with open("tmp.wav", "wb") as f:
         f.write(data)
     with open("tmp.wav", "rb") as f:
